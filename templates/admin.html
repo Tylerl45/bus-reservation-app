@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<p>Logged in as: {{ session["admin_username"] }}</p>
+<p><a href="{{ url_for('admin_logout') }}">Log out</a></p>
+
+<h3>Total Sales</h3>
+<p><strong>${{ "%.2f"|format(total_sales) }}</strong></p>
+
+<h3>Seating Chart</h3>
+<pre>{{ seating }}</pre>
+
+<h3>Reservations</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>Passenger</th>
+        <th>Seat</th>
+        <th>Reservation Code</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    {% for r, price in reservations_with_price %}
+    <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.passengerName }}</td>
+        <td>Row {{ r.seatRow }}, Col {{ r.seatColumn }}</td>
+        <td>{{ r.eTicketNumber }}</td>
+        <td>${{ "%.2f"|format(price) }}</td>
+        <td>
+            <form method="post" action="{{ url_for('delete_reservation', res_id=r.id) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

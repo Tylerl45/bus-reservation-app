@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Reserve a Seat</h2>
+
+<form method="post">
+    <label>First Name:
+        <input type="text" name="first_name" required>
+    </label><br><br>
+
+    <label>Last Name:
+        <input type="text" name="last_name" required>
+    </label><br><br>
+
+    <label>Seat Row (1–12):
+        <input type="number" name="seat_row" min="1" max="12" required>
+    </label><br><br>
+
+    <label>Seat Column (1–4):
+        <input type="number" name="seat_column" min="1" max="4" required>
+    </label><br><br>
+
+    <button type="submit">Reserve</button>
+</form>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+{% if success %}
+<p class="success">{{ success }}</p>
+{% endif %}
+
+<h3>Current Seating Chart</h3>
+<pre>{{ seating }}</pre>
+{% endblock %}
